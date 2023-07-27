@@ -1,0 +1,44 @@
+<html>
+  <head>
+
+    <meta charset="UTF-8">
+
+    <title>Reuso - Em construção</title>
+
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      window.dataLayer.push({
+        event:     "page_data",
+        page_type: "home",
+        shelf:     <%- JSON.stringify(shelfs, null, 2) %>
+      })
+    </script>
+
+    <%- include('partials/append_header_end.ejs') %>
+  </head>
+
+
+
+  <body>
+    <%- include('partials/append_body_start.ejs') %>
+    <h1>Re Uso</h1>
+    <h2>--Em construção--</h2>
+
+    <p>
+      O propósito e plano para este site é que seja uma ferramenta aliada à aumentar
+      o reuso - e quem sabe até a reciclagem - de materiais do nosso dia a dia.
+    </p>
+    <p>
+      Por exemplo, sabe aquelas cartelas de ovos limpinhas que vão parar no lixo? Uma família
+      que vende ovos poderia diminuir um pouco seus custos se pudessem recebê-las, não é mesmo?
+    </p>
+    <p>
+      A reciclagem é certamente importante, mas não podemos nos esquecer dos outros "Erres",
+      que são a Redução (isso é com você, filha e filho) e o Reuso (aqui que eu estou
+      tentando atacar).
+    </p>
+
+
+  </body>
+  
+</html>

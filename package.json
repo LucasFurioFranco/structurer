@@ -1,0 +1,28 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Website without using frameworks (pure HTML, CSS and JS only)",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasFurioFranco/brobath_docker_www.git"
+  },
+  "keywords": [
+    "Brobath",
+    "Docker"
+  ],
+  "author": "Lucas Furio Franco",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/LucasFurioFranco/brobath_docker_www/issues"
+  },
+  "homepage": "https://github.com/LucasFurioFranco/brobath_docker_www#readme",
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "nodemon": "^2.0.22"
+  }
+}
