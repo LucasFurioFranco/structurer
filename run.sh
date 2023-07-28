@@ -15,6 +15,21 @@ echo "Running: docker container rm brobath-docker-www"
 docker container rm reuso-eco-br-docker-www
 
 
+#Generates the sys_data JS module file
+#retrieves and stores in a file the last commit id
+FILE_NAME="system_data.js"
+NL=''
+
+sdj=''
+sdj=$sdj'const sys_data = {'$NL
+sdj=$sdj'  "git_commit_id": "'$(git rev-parse --short HEAD)'"'${NL}
+sdj=$sdj'};'$NL
+sdj=$sdj'module.exports = sys_data;'
+
+echo $sdj > $FILE_NAME
+
+
+
 #To build the docker image:
 #NOTE: you must be in the Dockerfile directory with tour terminal
 echo "Running: docker build -t brobath_docker_www ."
