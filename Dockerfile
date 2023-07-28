@@ -10,7 +10,7 @@ COPY . /app
 
 WORKDIR /app
 
-RUN ./git_config.sh
+#RUN ./git_config.sh
 
 RUN npm install
 
