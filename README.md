@@ -46,7 +46,7 @@ sudo chmod +x run.sh
 <p>For making enter.sh executable</p>
 
 ```bash
-sudo chmod +x run.sh
+sudo chmod +x enter.sh
 ```
 
 <p>To take a peek on the running project. Notice that the app is running on Nodemon, so any changes you do to the files will instantly "refresh" to the users.</p>
