@@ -14,31 +14,339 @@
       })
     </script>
 
+
+    <style>
+      .attribute {
+        border-style: groove;
+      }
+
+      .dl-event,
+      .dl-custom-type {
+        border-style: double;
+      }
+    </style>
+
+
+    <script>
+      (function() {
+        
+        var action_cases = {
+          //Project related
+          "delete-project": function(evt) {
+            console.log("Performed new-project")
+          },
+          "new-project": function(evt) {
+            console.log("Performed new-project")
+          },
+          "open-project": function(evt) {
+            console.log("Performed save-project")
+          },
+          "save-project": function(evt) {
+            console.log("Performed save-project")
+          },
+          //General cases
+          "delete": function(evt) {
+            console.log("Performed delete");
+            var ancestor = find_ancestor('.attribute, .dl-custom-type, .dl-event', evt.target);
+            ancestor && ancestor.parentElement.removeChild(ancestor);
+          },
+          "restore": function(evt) {
+            console.log("Performed restore")
+          },
+          "duplicate": function(evt) {
+            console.log("Performed duplicate")
+          },
+          "new": function(evt) {
+            console.log("Performed new");
+            /* DOING HERE */
+            var target = evt.target;
+            return target.matches('#dl_custom_types *') ? (add_dl_custom_type_box() || true) :
+                  target.matches('#dl_pushes *'      ) ? (add_dl_event_box()       || true) :
+                                                                                      false;
+          },
+          "save": function(evt) {
+            console.log("Performed save")
+          },
+          "add-attribute": function(evt) {
+            console.log("Performed add-attribute");
+
+            var ancestor = find_ancestor('.dl-custom-type, .dl-event', evt.target);
+            ancestor && (function() {
+              var div = document.createElement("div");
+              div.setAttribute("class", "attribute");
+              div.innerHTML = [
+                "\n",
+                "    <br>",
+                "    <label for=\"dl-custom-type-key-name-1\">Attribute name</label>",
+                "    <input id=\"dl-custom-type-key-name-1\" class=\"key-name\">",
+                "    <label for=\"dl-custom-type-key-type-1\">Type:</label>",
+                "    <select id=\"dl-custom-type-key-type-1\" class=\"key-type\">",
+                "      <option value=\"undefined\">undefined</option>",
+                "      <option value=\"string\">String</option>",
+                "      <option value=\"boolean\">Boolean</option>",
+                "      <option value=\"number\">Number</option>",
+                "      <option value=\"array\">Array</option>",
+                "      <option value=\"object\">Dictionary</option>",
+                "    </select>",
+                "    <div class=\"attribute-settings\">",
+                "      <p>Attribute settings and validations (like what type for Arrays)</p>",
+                "    </div>",
+                "    <div class=\"actions-container\">",
+                "      <br>",
+                "      <label>Attribute actions:</label>",
+                "      <button class=\"action\" data-action=\"delete\">Delete</button>",
+                "      <button class=\"action\" data-action=\"restore\">Restore</button>",
+                "      <button class=\"action\" data-action=\"duplicate\">Duplicate</button>",
+                "      <button class=\"action\" data-action=\"save\">Save</button>",
+                "    </div>",
+                "    <br>",
+                ""
+              ].join("\n");
+
+              ancestor
+                .querySelector(".attributes-container")
+                .appendChild(div);      
+
+            })();
+
+          }
+        };
+
+        function add_dl_custom_type_box() {
+          console.log('Executing add_dl_custom_type_box()');
+
+          var div = document.createElement("div");
+          div.setAttribute("class", "dl-custom-type");
+          div.innerHTML = [
+            "\n",
+            "  <br>",
+            "  <label for=\"dl_custom_type_1_name\">Name:</label>",
+            "  <input id=\"dl_custom_type_1_name\">",
+            "  <div>",
+            "    <br>",
+            "    <div>",
+            "      <label for=\"dl_custom_type_description\">Decription</label>",
+            "    </div>",
+            "    <textarea id=\"dl_custom_type_description\" type=\"textarea\" style=\"width: 321px; height: 177px;\"></textarea>",
+            "  </div>",
+            "  <div data-level=\"1\" class=\"dl-custom-type-attributes attributes-container\">",
+            "    <h4>Event Attributes</h4>",
+            "    ",
+            "  </div>",
+            "  <div class=\"actions-container\">",
+            "    <br>",
+            "    <label>DL Custom Type actions:</label>",
+            "    <button class=\"action\" data-action=\"delete\">Delete</button>",
+            "    <button class=\"action\" data-action=\"restore\">Restore</button>",
+            "    <button class=\"action\" data-action=\"duplicate\">Duplicate</button>",
+            "    <button class=\"action\" data-action=\"save\">Save</button>",
+            "    <button class=\"action\" data-action=\"add-attribute\">Add Attribute</button>",
+            "  </div>",
+            "  <br>",
+            ""
+          ].join("\n");
+
+          document
+            .querySelector('#dl_scheema .dl-custom-types-container')
+            .appendChild(div);
+        }
+
+        function add_dl_event_box(target) {
+          console.log('Executing add_dl_event_box() on', target);
+
+          var div = document.createElement("div");
+          div.setAttribute("class", "dl-event");
+          div.innerHTML = [
+            "\n",
+            "  <br>",
+            "  <label for\"dl_event_1_name\"=\"\">Name:</label>",
+            "  <input id=\"dl_event_1_name\">",
+            "  <div>",
+            "    <br>",
+            "    <div>",
+            "      <label for\"dl_event_1_description\"=\"\">Decription</label>",
+            "    </div>",
+            "    <textarea id=\"dl_event_1_description\" type=\"textarea\" style=\"width: 321px; height: 177px;\"></textarea>",
+            "  </div>",
+            "  <div data-level=\"1\" class=\"dl-event-attributes attributes-container\">",
+            "    <h4>Event Attributes</h4>",
+            "    ",
+            "  </div>",
+            "  <div class=\"actions-container\">",
+            "    <br>",
+            "    <label>DL Event actions:</label>",
+            "    <button class=\"action\" data-action=\"delete\">Delete</button>",
+            "    <button class=\"action\" data-action=\"restore\">Restore</button>",
+            "    <button class=\"action\" data-action=\"duplicate\">Duplicate</button>",
+            "    <button class=\"action\" data-action=\"save\">Save</button>",
+            "    <button class=\"action\" data-action=\"add-attribute\">Add Attribute</button>",
+            "  </div>",
+            "  <br>",
+            ""
+          ].join("\n");
+
+          document
+            .querySelector('#dl_pushes .dl-events-container')
+            .appendChild(div);
+        }
+
+        function find_ancestor(css_selector, elem) {
+          try {
+            while (!elem.matches(css_selector)) elem = elem.parentElement;
+            return elem;
+          } catch (ex) {
+            return null;
+          }
+        }
+
+
+        window.addEventListener("click", function(evt) {
+          var action = action_cases[evt.target.getAttribute("data-action")];
+          action && action(evt);
+        }, false) //Bubbling event for now
+
+      })()
+    </script>
+
+
     <%- include('partials/append_header_end.ejs') %>
+
   </head>
 
 
 
   <body>
     <%- include('partials/append_body_start.ejs') %>
-    <h1>Re Uso</h1>
-    <h2>--Em construção--</h2>
 
-    <p>
-      O propósito e plano para este site é que seja uma ferramenta aliada à aumentar
-      o reuso - e quem sabe até a reciclagem - de materiais do nosso dia a dia.
-    </p>
-    <p>
-      Por exemplo, sabe aquelas cartelas de ovos limpinhas que vão parar no lixo? Uma família
-      que vende ovos poderia diminuir um pouco seus custos se pudessem recebê-las, não é mesmo?
-    </p>
-    <p>
-      A reciclagem é certamente importante, mas não podemos nos esquecer dos outros "Erres",
-      que são a Redução (isso é com você, filha e filho) e o Reuso (aqui que eu estou
-      tentando atacar).
-    </p>
-
-
+    <h1>Data Structurer</h1>
+    <section id="dl_scheema">
+      <h2>DL Scheema</h2>
+      <div id="dl_custom_types">
+        <h3>DL Custom Types</h3>
+        <div class="dl-custom-types-container">
+          <div class="dl-custom-type">
+            <br>
+            <label for="dl_custom_type_1_name">Name:</label>
+            <input id="dl_custom_type_1_name">
+            <div>
+              <br>
+              <div>
+                <label for="dl_custom_type_description">Decription</label>
+              </div>
+              <textarea id="dl_custom_type_description" type="textarea" style="width: 321px; height: 177px;"></textarea>
+            </div>
+            <div data-level="1" class="dl-custom-type-attributes attributes-container">
+              <h4>Event Attributes</h4>
+              <div class="attribute">
+                <br>
+                <label for="dl-custom-type-key-name-1">Attribute name</label>
+                <input id="dl-custom-type-key-name-1" class="key-name">
+                <label for="dl-custom-type-key-type-1">Type:</label>
+                <select id="dl-custom-type-key-type-1" class="key-type">
+                  <option value="undefined">undefined</option>
+                  <option value="string">String</option>
+                  <option value="boolean">Boolean</option>
+                  <option value="number">Number</option>
+                  <option value="array">Array</option>
+                  <option value="object">Dictionary</option>
+                </select>
+                <div class="attribute-settings">
+                  <p>Attribute settings and validations (like what type for Arrays)</p>
+                </div>
+                <div class="actions-container">
+                  <br>
+                  <label>Attribute actions:</label>
+                  <button class="action" data-action="delete">Delete</button>
+                  <button class="action" data-action="restore">Restore</button>
+                  <button class="action" data-action="duplicate">Duplicate</button>
+                  <button class="action" data-action="save">Save</button>
+                </div>
+                <br>
+              </div>
+            </div>
+            <div class="actions-container">
+              <br>
+              <label>DL Custom Type actions:</label>
+              <button class="action" data-action="delete">Delete</button>
+              <button class="action" data-action="restore">Restore</button>
+              <button class="action" data-action="duplicate">Duplicate</button>
+              <button class="action" data-action="save">Save</button>
+              <button class="action" data-action="add-attribute">Add Attribute</button>
+            </div>
+            <br>
+          </div>
+          <br>
+        </div>
+        <div class="actions-container">
+          <br>
+          <button class="action" data-action="new">New Custom Type</button>
+        </div>
+      </div>
+      <div id="dl_pushes" class="dl_push" data-title="DL Pushes">
+        <h3>DL Pushes</h3>
+        <div class="dl-events-container">
+          <div class="dl-event">
+            <br>
+            <label for"dl_event_1_name"="">Name:</label>
+            <input id="dl_event_1_name">
+            <div>
+              <br>
+              <div>
+                <label for"dl_event_1_description"="">Decription</label>
+              </div>
+              <textarea id="dl_event_1_description" type="textarea" style="width: 321px; height: 177px;"></textarea>
+            </div>
+            <div data-level="1" class="dl-event-attributes attributes-container">
+              <h4>Event Attributes</h4>
+              <div class="attribute">
+                <br>
+                <label for="key-name-1">Attribute name</label>
+                <input id="key-name-1" class="key-name">
+                <label for="key-type-1">Type:</label>
+                <select id="key-type-1" class="key-type">
+                  <option value="undefined">undefined</option>
+                  <option value="string">String</option>
+                  <option value="boolean">Boolean</option>
+                  <option value="number">Number</option>
+                  <option value="array">Array</option>
+                  <option value="object">Dictionary</option>
+                </select>
+                <div class="attribute-settings">
+                  <p>Attribute settings and validations (like what type for Arrays)</p>
+                </div>
+                <div class="actions-container">
+                  <br>
+                  <label>Attribute actions:</label>
+                  <button class="action" data-action="delete">Delete</button>
+                  <button class="action" data-action="restore">Restore</button>
+                  <button class="action" data-action="duplicate">Duplicate</button>
+                  <button class="action" data-action="save">Save</button>
+                </div>
+                <br>
+              </div>
+            </div>
+            <div class="actions-container">
+              <br>
+              <label>DL Event actions:</label>
+              <button class="action" data-action="delete">Delete</button>
+              <button class="action" data-action="restore">Restore</button>
+              <button class="action" data-action="duplicate">Duplicate</button>
+              <button class="action" data-action="save">Save</button>
+              <button class="action" data-action="add-attribute">Add Attribute</button>
+            </div>
+            <br>
+          </div>
+        </div>
+        <div class="actions-container">
+          <br>
+          <button class="action" data-action="new">New DL Push</button>
+        </div>
+        <br>
+      </div>
+    </section>
+    <section id="dom_scheema">
+      <h2>DOM Scheema</h2>
+    </section>
   </body>
   
 </html>
