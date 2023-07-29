@@ -1,1 +1,1 @@
-docker exec -it reuso-eco-br-docker-www /bin/bash
+docker exec -it structurer-docker-www /bin/bash

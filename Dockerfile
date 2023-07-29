@@ -16,6 +16,6 @@ RUN npm install
 
 RUN npm install -g nodemon
 
-EXPOSE 7050
+EXPOSE 7060
 
 CMD [ "nodemon", "index.js" ]

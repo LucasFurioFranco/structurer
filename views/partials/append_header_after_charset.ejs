@@ -1,5 +1,5 @@
 
 
     <script>
-window.sys_data = <%- JSON.stringify(sys_data, null, 2) %>
+window.sys_data = <%- JSON.stringify(Object.assign({}, sys_data, {mock_db: db}), null, 2) %>
     </script>

@@ -1,79 +1,8 @@
 const db = {
-  data: {
-    user: {
-      "<User ID>": {
-        id: "<User ID>",
-        name: "<User name>",
-        email: "<User email>",
-        phone_number: "<+5511989999999>",
-        secret: "<Triple-hashed password>", //NEVER store the plain password, FOR FORK SAKE
-        privacy: {
-          display_name: "<Boolean:true|false>",
-          display_email: "<Boolean:true|false>",
-          display_phone: "<Boolean:true|false>",
-        },
-        projects: {
-          "<Project ID>": {
-            id: "<Project ID>",
-            name: "<Project name>", //Reduldant for performance
-            url: "<Project url>",   //Reduldant for performance
-            access_type: "<blocked|view-only|full>", //The access type of this user to this project
-            /* access_type:
-              - soft-edit: may do changes in its own browser and make a copy for itself
-                or download its JSON, but can not save/modify it on the DB
-            */
-            watching: { //Kind of following
-              granted_notification_type_1: "Boolean:true|false",
-              granted_notification_type_2: "Boolean:true|false",
-              phone_call: false,
-              letter: true,
-              letter_elegante: true,
-              telegraph: true,
-              /*...*/
-            }
-          },
-        },
-      },
-    },
-
-    projects: {
-      "<Project ID>": {
-	owner: "<User ID of the owner>",
-        users: {
-          //TODO TO DO: keep it from here
-        },
-      }
-    }
-  },
-
+  data:    {},
   method: {}
 }
 
-
-const user_data = db.data.user = db.data.user || {};
-user_data["user_1_id"] = {
-  id: "user_1_id",
-  name: "Frajolinha Furio Franco",
-}
-
-user_data['user_2_id'] = {
-  id: "user_2_id",
-  name: "Atheninha Furio Franco",
-}
-
-
-
-
-
-
-
-
-
-
-
-
-/*
-//Will keep for a while, afraid it might break some things on just deleting, and I dont have saco to check it right now
 db.data.products = {
   "12": {
     "id": 12,
@@ -155,7 +84,7 @@ db.data.products = {
   }
 }
 
-*/
+
 
 
 

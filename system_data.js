@@ -1,1 +1,1 @@
-const sys_data = { "git_commit_id": "d1db04d"};module.exports = sys_data;
+const sys_data = { "git_commit_id": "d2411fd", "name": "structurer-docker-www"};module.exports = sys_data;
