@@ -7,7 +7,7 @@ The requirements are having installed in your machine the following:
  + Docker
 
 ### Nginx configuration
-<p>Notice that this project runs on port 7050. So, for not being required to input the ":7050" part on the URL, add the following configuration to "/etc/nginx/sites-available/default" file.</p>
+<p>Notice that this project runs on port 7060. So, for not being required to input the ":7060" part on the URL, add the following configuration to "/etc/nginx/sites-available/default" file.</p>
 
 <p><strong>ATENTION</strong>: change the server_name to your domain. If you are running on localhost, I think (bnot sude) you must set it the value "localhost" (without the quotation marks), but again, not sure.</p>
 
@@ -20,7 +20,7 @@ server {
         server_name my.domain.com;
 
         location / {
-                proxy_pass http://localhost:7050;
+                proxy_pass http://localhost:7060;
         }
 }
 ```
