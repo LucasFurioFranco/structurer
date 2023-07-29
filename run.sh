@@ -32,7 +32,7 @@ NL=''
 sdj=''
 sdj=$sdj'const sys_data = {'$NL
 sdj=$sdj'  "git_commit_id": "'$(git rev-parse --short HEAD)'",'$NL
-sdj=$sdj'  "name":          "structurer-docker-www"'${NL}
+sdj=$sdj'  "name":          "structurer-docker-www"'$NL
 sdj=$sdj'};'$NL
 sdj=$sdj'module.exports = sys_data;'
 
