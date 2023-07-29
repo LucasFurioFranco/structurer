@@ -1,4 +1,4 @@
-# [Reuso Eco BR](http://reuso.eco.br/)
+# [Data Structurer](http://structurer.lucasfuriofranco.com.br)
 
 ## For running it (on Ubuntu)
 The requirements are having installed in your machine the following:
