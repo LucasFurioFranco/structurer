@@ -1,4 +1,4 @@
-<html>
+[<html>
   <head>
 
     <meta charset="UTF-8">
@@ -16,23 +16,38 @@
     </script>
 
 
-    <style>
+        <style>
       .attribute {
         border-style: groove;
+      }
+
+      input {
+        width: 100%;
+      }
+
+      textarea {
+        width: 100%;
+        height: 100px;
+      }
+
+      .attribute textarea {
+        width: 100%;
+        height: 50px;
       }
 
       .dl-custom-type,
       .dl-event {
         border-style: double;
       }
-
     </style>
-<meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
       /* START of CSS for fixed menu
-         Source: https://www.w3schools.com/howto/howto_css_fixed_menu.asp
-      */
-      body {margin:0;}
+     Source: https://www.w3schools.com/howto/howto_css_fixed_menu.asp
+  */
+      body {
+        margin: 0;
+      }
 
       .navbar {
         overflow: hidden;
@@ -65,11 +80,13 @@
       .main {
         padding: 16px;
         margin-top: 30px;
-        height: 1500px; /* Used in this example to enable scrolling */
+        height: 1500px;
+        /* Used in this example to enable scrolling */
       }
 
-      /* END of CSS for fixed menu
+      /* END of CSS for fixed menu */
     </style>
+ 
 
     <%- include('partials/append_header_end.ejs') %>
 
@@ -87,196 +104,54 @@
       <a href="#news">News</a>
       <a href="#contact">Contact</a>
     </div>
-
-
-<div class="main">
-
-    <h1>Data Structurer</h1>
-    <section id="dl_scheema">
-      <h2>DL Scheema</h2>
-      <div id="dl_custom_types" data-title="DL Custom Types">
-        <h3>DL Custom Types</h3>
-        <div class="dl-custom-types-container">
-          <div class="dl-custom-type">
+    <div class="main">
+      <h1>Data Structurer</h1>
+      <section id="dl_scheema">
+        <h2>DL Scheema</h2>
+        <div id="dl_custom_types" data-title="DL Custom Types">
+          <h3>DL Custom Types</h3>
+          <div class="dl-custom-types-container">
             <br>
-            <div>
-              <label>DL Custom Type name</label>
-            </div>
-            <input name="name">
-            <div>
-              <div>
-                <br>
-                <label>DL Custom Type Decription</label>
-              </div>
-              <textarea style="width: 500px; height: 100px;" name="description"></textarea>
-            </div>
-            <div class="attributes-container">
-              <br>
-              <h4>DL Custom Type Attributes</h4>
-              <div class="attribute">
-                <br>
-                <div>
-                  <label class="reminder-name">TODO: Add DL Custom Type name dynamically</label>
-                </div>
-                <div>
-                  <div>
-                    <br>
-                    <label>DL Custom Type - Attribute name</label>
-                  </div>
-                  <input name="name">
-                </div>
-                <div>
-                  <div>
-                    <br>
-                    <label>DL Custom Type - Attribute type</label>
-                  </div>
-                  <select name="type">
-                    <option value="undefined">undefined</option>
-                    <option value="string">String</option>
-                    <option value="boolean">Boolean</option>
-                    <option value="number">Number</option>
-                    <option value="array">Array</option>
-                    <option value="object">Dictionary</option>
-                  </select>
-                </div>
-                <div class="settings">
-                  <br>
-                  <p>TODO: Attribute settings and validations (like what type for Arrays)</p>
-                </div>
-                <div class="actions-container">
-                  <br>
-                  <div>
-                    <label>DL Custom Type Attribute actions</label>
-                  </div>
-                  <button class="action" data-action="delete">Delete</button>
-                  <button class="action" data-action="restore">Restore</button>
-                  <button class="action" data-action="duplicate">Duplicate</button>
-                  <button class="action" data-action="save">Save</button>
-                </div>
-                <br>
-              </div>
-            </div>
-            <div class="actions-container">
-              <br>
-              <div>
-                <label class="reminder-name">TODO: Add DL Custom Type name dynamically</label>
-                <br>
-                <br>
-                <label>DL Custom Type actions</label>
-              </div>
-              <button class="action" data-action="delete">Delete</button>
-              <button class="action" data-action="restore">Restore</button>
-              <button class="action" data-action="duplicate">Duplicate</button>
-              <button class="action" data-action="save">Save</button>
-              <button class="action" data-action="add-attribute">Add Attribute</button>
-            </div>
+          </div>
+          <div class="actions-container">
             <br>
+            <button class="action" data-action="new">New Custom Type</button>
+          </div>
+        </div>
+        <div>
+          <!--Separator while I don't know how to do it with CSS alone-->
+          <br>
+          <br>
+          <br>
+          <br>
+          <br>
+        </div>
+        <div id="dl_pushes" data-title="DL Pushes">
+          <h3>DL Pushes</h3>
+          <div class="dl-events-container">
+            <br>
+          </div>
+          <div class="actions-container">
+            <br>
+            <button class="action" data-action="new">New DL Push</button>
           </div>
           <br>
         </div>
-        <div class="actions-container">
-          <br>
-          <button class="action" data-action="new">New Custom Type</button>
-        </div>
-      </div>
+      </section>
       <div>
         <!--Separator while I don't know how to do it with CSS alone-->
-        <br><br><br><br><br>
-      </div>
-      <div id="dl_pushes" data-title="DL Pushes">
-        <h3>DL Pushes</h3>
-        <div class="dl-events-container">
-          <div class="dl-event">
-            <br>
-            <div>
-              <label>DL Push name</label>
-            </div>
-            <input name="name">
-            <div>
-              <br>
-              <div>
-                <label>DL Push decription</label>
-              </div>
-              <textarea style="width: 500px; height: 100px;" name="description"></textarea>
-            </div>
-            <div class="attributes-container">
-              <br>
-              <h4>DL Push Attributes</h4>
-              <div class="attribute">
-                <br>
-                <div>
-                  <label class="reminder-name">TODO: Add DL Push name dynamically</label>
-                </div>
-                <div>
-                  <div>
-                    <br>
-                    <label>DL Push - Attribute name</label>
-                  </div>
-                  <input name="name">
-                </div>
-                <div>
-                  <div>
-                    <br>
-                    <label>DL Push - Attribute type</label>
-                  </div>
-                  <select name="type">
-                    <option value="undefined">undefined</option>
-                    <option value="string">String</option>
-                    <option value="boolean">Boolean</option>
-                    <option value="number">Number</option>
-                    <option value="array">Array</option>
-                    <option value="object">Dictionary</option>
-                  </select>
-                </div>
-                <div class="settings">
-                  <br>
-                  <p>TODO: Attribute settings and validations (like what type for Arrays)</p>
-                </div>
-                <div class="actions-container">
-                  <br>
-                  <div>
-                    <label>DL Push Attribute actions</label>
-                  </div>
-                  <button class="action" data-action="delete">Delete</button>
-                  <button class="action" data-action="restore">Restore</button>
-                  <button class="action" data-action="duplicate">Duplicate</button>
-                  <button class="action" data-action="save">Save</button>
-                </div>
-                <br>
-              </div>
-            </div>
-            <div class="actions-container">
-              <br>
-              <div>
-                <label class="reminder-name">TODO: Add DL Push name dynamically</label>
-                <br>
-                <br>
-                <label>DL Push actions</label>
-              </div>
-              <button class="action" data-action="delete">Delete</button>
-              <button class="action" data-action="restore">Restore</button>
-              <button class="action" data-action="duplicate">Duplicate</button>
-              <button class="action" data-action="save">Save</button>
-              <button class="action" data-action="add-attribute">Add Attribute</button>
-            </div>
-            <br>
-          </div>
-          <br>
-        </div>
-        <div class="actions-container">
-          <br>
-          <button class="action" data-action="new">New DL Push</button>
-        </div>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
+        <br>
         <br>
       </div>
-    </section>
-    <div>
-      <!--Separator while I don't know how to do it with CSS alone-->
-      <br><br><br><br><br><br><br>
+      <section id="dom_scheema">
+        <h2>DOM Scheema</h2>
+      </section>
     </div>
-    <section id="dom_scheema">
-      <h2>DOM Scheema</h2>
-    </section>
   </body>
 
 </div>  
