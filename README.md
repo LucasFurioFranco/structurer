@@ -9,7 +9,7 @@ The requirements are having installed in your machine the following:
 ### Nginx configuration
 <p>Notice that this project runs on port 7060. So, for not being required to input the ":7060" part on the URL, add the following configuration to "/etc/nginx/sites-available/default" file.</p>
 
-<p><strong>ATENTION</strong>: change the server_name to your domain. If you are running on localhost, I think (bnot sude) you must set it the value "localhost" (without the quotation marks), but again, not sure.</p>
+<p><strong>ATENTION</strong>: change the server_name to your domain. If you are running on localhost, I think (but not sure) you must set it the value "localhost" (without the quotation marks), but again, not sure.</p>
 
 <p>Also, I have not set the SSL yet, so runs only on http (no <strong>s</strong>)</p>
 
