@@ -14,7 +14,7 @@ The requirements are having installed in your machine the following:
 <p>Also, I have not set the SSL yet, so runs only on http (no <strong>s</strong>)</p>
 
 ```
-# Docker Reuso Eco Br WWW
+# Docker WC Structurer
 server {
         listen 80;
         server_name my.domain.com;
