@@ -1,0 +1,244 @@
+    <script>
+      (function() {
+              
+        /*window.core will be removed before going real - here only for tests (maybe not too.. don't know yet)*/
+        var core = window.core = {
+          //Adding core listeners here, so we avoid echoes ("double listening")
+          listen: function(event_name, handler, is_capture) {
+            var phase = is_capture?"capture":"bubbling",
+                listening = (core.listen.listening = Object.assign({
+                  capture: {},
+                  bubbling: {}
+                }, core.listen.listening))[phase];
+
+            //Only adds the listener to the phase of the event if there is none registered yet
+            //I do this to avoid unnecessary listener additions - forces me to add only one for the core functionality
+            if(!listening[event_name]) {
+              window.addEventListener(event_name, handler, is_capture);
+              listening[event_name] =  handler;
+              return true;
+            }
+            return false;
+            
+          },
+
+          unlisten: function(event_name, is_capture) {
+            var phase = is_capture?"capture":"bubbling";
+            var listening = (core.listen.listening = Object.assign({
+              capture: {},
+              bubbling: {}
+            }, core.listen.listening))[phase];
+
+
+            //Only adds the listener to the phase of the event if there is none registered yet
+            //I do this to avoid unnecessary listener additions - forces me to add only one for the core functionality
+            if(!listening[event_name]) {
+              return false;
+            }
+            window.removeEventListener(event_name, listening[event_name], is_capture);
+            delete listening[event_name];
+            return true;
+            
+          },
+
+          action_change_cases: {
+            "change-attribute-type": function(evt) {
+              console.log("Performed change change-attribute-type");
+            }
+
+          },
+
+          action_click_cases: {
+            //Project related
+            "delete-project": function(evt) {
+              console.log("Performed new-project")
+            },
+            "new-project": function(evt) {
+              console.log("Performed new-project")
+            },
+            "open-project": function(evt) {
+              console.log("Performed save-project")
+            },
+            "save-project": function(evt) {
+              console.log("Performed save-project")
+            },
+            //General cases
+            "delete": function(evt) {
+              console.log("Performed delete");
+              var ancestor = evt.target.findAncestor('.attribute, .dl-custom-type, .dl-event');
+              ancestor && ancestor.parentElement.removeChild(ancestor);
+            },
+            "restore": function(evt) {
+              console.log("Performed restore")
+            },
+            "duplicate": function(evt) {
+              console.log("Performed duplicate")
+            },
+            "new": function(evt) {
+              console.log("Performed new");
+              var target = evt.target;
+              return target.matches('#dl_custom_types *') ? (add_dl_custom_type_box() || true) :
+                    target.matches('#dl_pushes *')       ? (add_dl_event_box()       || true) : false;
+            },
+            "save": function(evt) {
+              console.log("Performed save")
+            },
+            "add-attribute": function(evt) {
+              console.log("Performed add-attribute");
+              var ancestor = evt.target.findAncestor('.dl-custom-type, .dl-event');
+              ancestor && (function() {
+                var div = document.createElement("div");
+                div.setAttribute("class", "attribute");
+                div.innerHTML = [
+                  "",
+                  "  <br>",
+                  "  <div>",
+                  "    <label class=\"reminder-name\">TODO: Add DL Custom Type name dynamically</label>",
+                  "  </div>",
+                  "  <div>",
+                  "    <div>",
+                  "      <br>",
+                  "      <label>DL Custom Type - Attribute name</label>",
+                  "    </div>",
+                  "    <input name=\"name\">",
+                  "  </div>",
+                  "  <div>",
+                  "    <div>",
+                  "      <br>",
+                  "      <label>DL Custom Type - Attribute type</label>",
+                  "    </div>",
+                  "    <select name=\"type\">",
+                  "      <option value=\"undefined\">undefined</option>",
+                  "      <option value=\"string\">String</option>",
+                  "      <option value=\"boolean\">Boolean</option>",
+                  "      <option value=\"number\">Number</option>",
+                  "      <option value=\"array\">Array</option>",
+                  "      <option value=\"object\">Dictionary</option>",
+                  "    </select>",
+                  "  </div>",
+                  "  <div class=\"settings\">",
+                  "    <br>",
+                  "    <p>TODO: Attribute settings and validations (like what type for Arrays)</p>",
+                  "  </div>",
+                  "  <div class=\"actions-container\">",
+                  "    <br>",
+                  "    <div>",
+                  "      <label>DL Custom Type Attribute actions</label>",
+                  "    </div>",
+                  "    <button class=\"action\" data-action=\"delete\">Delete</button>",
+                  "    <button class=\"action\" data-action=\"restore\">Restore</button>",
+                  "    <button class=\"action\" data-action=\"duplicate\">Duplicate</button>",
+                  "    <button class=\"action\" data-action=\"save\">Save</button>",
+                  "  </div>",
+                  "  <br>",
+                  ""
+                ].join("\n");
+                ancestor.querySelector(".attributes-container").appendChild(div);
+              })();
+            }
+          }
+
+
+        }
+
+        function add_dl_custom_type_box() {
+          console.log('Executing add_dl_custom_type_box()');
+          var div = document.createElement("div");
+          div.setAttribute("class", "dl-custom-type");
+          div.innerHTML = [
+            "",
+            "            <br>",
+            "            <div>",
+            "              <label>DL Custom Type name</label>",
+            "            </div>",
+            "            <input name=\"name\">",
+            "            <div>",
+            "              <div>",
+            "                <br>",
+            "                <label>DL Custom Type Decription</label>",
+            "              </div>",
+            "              <textarea style=\"width: 500px; height: 100px;\" name=\"description\"></textarea>",
+            "            </div>",
+            "            <div class=\"attributes-container\">",
+            "              <br>",
+            "              <h4>DL Custom Type Attributes</h4>",
+            "              ",
+            "            </div>",
+            "            <div class=\"actions-container\">",
+            "              <br>",
+            "              <div>",
+            "                <label class=\"reminder-name\">TODO: Add DL Custom Type name dynamically</label>",
+            "                <br>",
+            "                <br>",
+            "                <label>DL Custom Type actions</label>",
+            "              </div>",
+            "              <button class=\"action\" data-action=\"delete\">Delete</button>",
+            "              <button class=\"action\" data-action=\"restore\">Restore</button>",
+            "              <button class=\"action\" data-action=\"duplicate\">Duplicate</button>",
+            "              <button class=\"action\" data-action=\"save\">Save</button>",
+            "              <button class=\"action\" data-action=\"add-attribute\">Add Attribute</button>",
+            "            </div>",
+            "            <br>",
+            "          "
+          ].join("\n");
+          document.querySelector('#dl_scheema .dl-custom-types-container').appendChild(div);
+        }
+
+        function add_dl_event_box(target) {
+          console.log('Executing add_dl_event_box() on', target);
+          var div = document.createElement("div");
+          div.setAttribute("class", "dl-event");
+          div.innerHTML = [
+            "",
+            "            <br>",
+            "            <div>",
+            "              <label>DL Push name</label>",
+            "            </div>",
+            "            <input name=\"name\">",
+            "            <div>",
+            "              <br>",
+            "              <div>",
+            "                <label>DL Push decription</label>",
+            "              </div>",
+            "              <textarea style=\"width: 500px; height: 100px;\" name=\"description\"></textarea>",
+            "            </div>",
+            "            <div class=\"attributes-container\">",
+            "              <br>",
+            "              <h4>DL Push Attributes</h4>",
+            "              ",
+            "            </div>",
+            "            <div class=\"actions-container\">",
+            "              <br>",
+            "              <div>",
+            "                <label class=\"reminder-name\">TODO: Add DL Push name dynamically</label>",
+            "                <br>",
+            "                <br>",
+            "                <label>DL Push actions</label>",
+            "              </div>",
+            "              <button class=\"action\" data-action=\"delete\">Delete</button>",
+            "              <button class=\"action\" data-action=\"restore\">Restore</button>",
+            "              <button class=\"action\" data-action=\"duplicate\">Duplicate</button>",
+            "              <button class=\"action\" data-action=\"save\">Save</button>",
+            "              <button class=\"action\" data-action=\"add-attribute\">Add Attribute</button>",
+            "            </div>",
+            "            <br>",
+            "          "
+          ].join("\n");
+          document.querySelector('#dl_pushes .dl-events-container').appendChild(div);
+        }
+
+
+
+        core.listen("click", function(evt) {
+          var action = core.action_click_cases[evt.target.getAttribute("data-action")];
+          action && action(evt);
+        }, false) //Bubbling event for now
+
+        core.listen("change", function(evt) {
+          var action = core.action_change_cases[evt.target.getAttribute("data-action")];
+          action && action(evt);
+        }, true) //This one will be capture
+
+
+      })()
+    </script>

@@ -3,3 +3,32 @@
     <script>
 window.sys_data = <%- JSON.stringify(Object.assign({}, sys_data, {mock_db: db}), null, 2) %>
     </script>
+    <script>
+      Element.prototype.findAncestor = function(css_selector, elem) {
+        elem = elem || this;
+        try {
+          while (!elem.matches(css_selector)) elem = elem.parentElement;
+            return elem;
+        } catch (ex) {
+          return null;
+        }
+      }
+
+      Element.prototype.findAncestors = function(css_selector, elem) {
+        elem = (elem || this).parentElement;
+        var ancestors = [];
+        try {
+          while (!!elem) {
+            elem.matches(css_selector) && ancestors.push(elem);
+            elem = elem.parentElement;
+          }
+
+        } catch (ex) {
+
+        } finally {
+          return ancestors;
+
+        }
+
+      };
+    </script>

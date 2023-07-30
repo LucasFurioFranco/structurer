@@ -3,6 +3,7 @@
 
     <meta charset="UTF-8">
     <%- include('partials/append_header_after_charset.ejs') %>
+    <%- include('partials/core.ejs') %>
 
     <title>WC Data Structurer</title>
 
@@ -24,211 +25,71 @@
       .dl-event {
         border-style: double;
       }
+
+    </style>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      /* START of CSS for fixed menu
+         Source: https://www.w3schools.com/howto/howto_css_fixed_menu.asp
+      */
+      body {margin:0;}
+
+      .navbar {
+        overflow: hidden;
+        background-color: #333;
+        position: fixed;
+        top: 0;
+        width: 100%;
+      }
+
+      .navbar a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        padding: 14px 16px;
+        text-decoration: none;
+        font-size: 17px;
+      }
+
+      .navbar a:hover {
+        background: #ddd;
+        color: black;
+      }
+
+      .navbar a.active {
+        background-color: #04AA6D;
+        color: white;
+      }
+
+      .main {
+        padding: 16px;
+        margin-top: 30px;
+        height: 1500px; /* Used in this example to enable scrolling */
+      }
+
+      /* END of CSS for fixed menu
     </style>
 
-
-    <script>
-      (function() {
-        var action_cases = {
-          //Project related
-          "delete-project": function(evt) {
-            console.log("Performed new-project")
-          },
-          "new-project": function(evt) {
-            console.log("Performed new-project")
-          },
-          "open-project": function(evt) {
-            console.log("Performed save-project")
-          },
-          "save-project": function(evt) {
-            console.log("Performed save-project")
-          },
-          //General cases
-          "delete": function(evt) {
-            console.log("Performed delete");
-            var ancestor = find_ancestor('.attribute, .dl-custom-type, .dl-event', evt.target);
-            ancestor && ancestor.parentElement.removeChild(ancestor);
-          },
-          "restore": function(evt) {
-            console.log("Performed restore")
-          },
-          "duplicate": function(evt) {
-            console.log("Performed duplicate")
-          },
-          "new": function(evt) {
-            console.log("Performed new");
-            var target = evt.target;
-            return target.matches('#dl_custom_types *') ? (add_dl_custom_type_box() || true) :
-                   target.matches('#dl_pushes *')       ? (add_dl_event_box()       || true) : false;
-          },
-          "save": function(evt) {
-            console.log("Performed save")
-          },
-          "add-attribute": function(evt) {
-            console.log("Performed add-attribute");
-            var ancestor = find_ancestor('.dl-custom-type, .dl-event', evt.target);
-            ancestor && (function() {
-              var div = document.createElement("div");
-              div.setAttribute("class", "attribute");
-              div.innerHTML = [
-                "",
-                "  <br>",
-                "  <div>",
-                "    <label class=\"reminder-name\">TODO: Add DL Custom Type name dynamically</label>",
-                "  </div>",
-                "  <div>",
-                "    <div>",
-                "      <br>",
-                "      <label>DL Custom Type - Attribute name</label>",
-                "    </div>",
-                "    <input name=\"name\">",
-                "  </div>",
-                "  <div>",
-                "    <div>",
-                "      <br>",
-                "      <label>DL Custom Type - Attribute type</label>",
-                "    </div>",
-                "    <select name=\"type\">",
-                "      <option value=\"undefined\">undefined</option>",
-                "      <option value=\"string\">String</option>",
-                "      <option value=\"boolean\">Boolean</option>",
-                "      <option value=\"number\">Number</option>",
-                "      <option value=\"array\">Array</option>",
-                "      <option value=\"object\">Dictionary</option>",
-                "    </select>",
-                "  </div>",
-                "  <div class=\"settings\">",
-                "    <br>",
-                "    <p>TODO: Attribute settings and validations (like what type for Arrays)</p>",
-                "  </div>",
-                "  <div class=\"actions-container\">",
-                "    <br>",
-                "    <div>",
-                "      <label>DL Custom Type Attribute actions</label>",
-                "    </div>",
-                "    <button class=\"action\" data-action=\"delete\">Delete</button>",
-                "    <button class=\"action\" data-action=\"restore\">Restore</button>",
-                "    <button class=\"action\" data-action=\"duplicate\">Duplicate</button>",
-                "    <button class=\"action\" data-action=\"save\">Save</button>",
-                "  </div>",
-                "  <br>",
-                ""
-              ].join("\n");
-              ancestor.querySelector(".attributes-container").appendChild(div);
-            })();
-          }
-        };
-
-        function add_dl_custom_type_box() {
-          console.log('Executing add_dl_custom_type_box()');
-          var div = document.createElement("div");
-          div.setAttribute("class", "dl-custom-type");
-          div.innerHTML = [
-            "",
-            "            <br>",
-            "            <div>",
-            "              <label>DL Custom Type name</label>",
-            "            </div>",
-            "            <input name=\"name\">",
-            "            <div>",
-            "              <div>",
-            "                <br>",
-            "                <label>DL Custom Type Decription</label>",
-            "              </div>",
-            "              <textarea style=\"width: 500px; height: 100px;\" name=\"description\"></textarea>",
-            "            </div>",
-            "            <div class=\"attributes-container\">",
-            "              <br>",
-            "              <h4>DL Custom Type Attributes</h4>",
-            "              ",
-            "            </div>",
-            "            <div class=\"actions-container\">",
-            "              <br>",
-            "              <div>",
-            "                <label class=\"reminder-name\">TODO: Add DL Custom Type name dynamically</label>",
-            "                <br>",
-            "                <br>",
-            "                <label>DL Custom Type actions</label>",
-            "              </div>",
-            "              <button class=\"action\" data-action=\"delete\">Delete</button>",
-            "              <button class=\"action\" data-action=\"restore\">Restore</button>",
-            "              <button class=\"action\" data-action=\"duplicate\">Duplicate</button>",
-            "              <button class=\"action\" data-action=\"save\">Save</button>",
-            "              <button class=\"action\" data-action=\"add-attribute\">Add Attribute</button>",
-            "            </div>",
-            "            <br>",
-            "          "
-          ].join("\n");
-          document.querySelector('#dl_scheema .dl-custom-types-container').appendChild(div);
-        }
-
-        function add_dl_event_box(target) {
-          console.log('Executing add_dl_event_box() on', target);
-          var div = document.createElement("div");
-          div.setAttribute("class", "dl-event");
-          div.innerHTML = [
-            "",
-            "            <br>",
-            "            <div>",
-            "              <label>DL Push name</label>",
-            "            </div>",
-            "            <input name=\"name\">",
-            "            <div>",
-            "              <br>",
-            "              <div>",
-            "                <label>DL Push decription</label>",
-            "              </div>",
-            "              <textarea style=\"width: 500px; height: 100px;\" name=\"description\"></textarea>",
-            "            </div>",
-            "            <div class=\"attributes-container\">",
-            "              <br>",
-            "              <h4>DL Push Attributes</h4>",
-            "              ",
-            "            </div>",
-            "            <div class=\"actions-container\">",
-            "              <br>",
-            "              <div>",
-            "                <label class=\"reminder-name\">TODO: Add DL Push name dynamically</label>",
-            "                <br>",
-            "                <br>",
-            "                <label>DL Push actions</label>",
-            "              </div>",
-            "              <button class=\"action\" data-action=\"delete\">Delete</button>",
-            "              <button class=\"action\" data-action=\"restore\">Restore</button>",
-            "              <button class=\"action\" data-action=\"duplicate\">Duplicate</button>",
-            "              <button class=\"action\" data-action=\"save\">Save</button>",
-            "              <button class=\"action\" data-action=\"add-attribute\">Add Attribute</button>",
-            "            </div>",
-            "            <br>",
-            "          "
-          ].join("\n");
-          document.querySelector('#dl_pushes .dl-events-container').appendChild(div);
-        }
-
-        function find_ancestor(css_selector, elem) {
-          try {
-            while (!elem.matches(css_selector)) elem = elem.parentElement;
-            return elem;
-          } catch (ex) {
-            return null;
-          }
-        }
-        window.addEventListener("click", function(evt) {
-          var action = action_cases[evt.target.getAttribute("data-action")];
-          action && action(evt);
-        }, false) //Bubbling event for now
-      })()
-    </script>
-
-
     <%- include('partials/append_header_end.ejs') %>
+
 
   </head>
 
 
 
   <body>
+
     <%- include('partials/append_body_start.ejs') %>
+
+    <div class="navbar">
+      <a href="#home" class="active">Home</a>
+      <a href="#news">News</a>
+      <a href="#contact">Contact</a>
+    </div>
+
+
+<div class="main">
 
     <h1>Data Structurer</h1>
     <section id="dl_scheema">
@@ -417,5 +278,7 @@
       <h2>DOM Scheema</h2>
     </section>
   </body>
-  
+
+</div>  
+
 </html>
